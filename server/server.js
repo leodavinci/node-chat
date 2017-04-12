@@ -42,6 +42,16 @@ io.on('connection',(socket)=>{
     // socket.on('createEmail', function(email) {
     //     console.log('new email: ',email);
     // });
+    socket.emit('newMessage',{
+        from: 'Admin',
+        text: 'Welcome to chat app',
+        createdAt: new Date().getTime()
+    });
+    socket.broadcast.emit('newMessage',{
+        from: 'Admin',
+        text: 'New User Joined',
+        createdAt: new Date().getTime()
+    });
 
     socket.on('createMessage', function(message) {
         console.log('new message: ',message);
@@ -50,6 +60,11 @@ io.on('connection',(socket)=>{
             text: message.text,
             createdAt: new Date().getTime()
         });
+        // socket.broadcast.emit('newMessage',{
+        //     from: message.from,
+        //     text: message.text,
+        //     createdAt: new Date().getTime()
+        // });
     });
 });
 
