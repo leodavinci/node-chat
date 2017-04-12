@@ -23,28 +23,33 @@ var io = socketIO(server);
 io.on('connection',(socket)=>{
     console.log('New user connected');
 
-    socket.emit('newEmail',{
-        from: 'maxmayank9@gmail.com',
-        text: 'hello...',
-        createdAt: 23
-    });
-
-    socket.emit('newMessage',{
-        from: 'himangi',
-        text: 'hello how r u...?',
-        createdAt: 23
-    });
+    // socket.emit('newEmail',{
+    //     from: 'maxmayank9@gmail.com',
+    //     text: 'hello...',
+    //     createdAt: 23
+    // });
+    //
+    // socket.emit('newMessage',{
+    //     from: 'himangi',
+    //     text: 'hello how r u...?',
+    //     createdAt: 23
+    // });
 
     socket.on('disconnect',() =>{
         console.log('user disconnected');
     });
 
-    socket.on('createEmail', function(email) {
-        console.log('new email: ',email);
-    });
+    // socket.on('createEmail', function(email) {
+    //     console.log('new email: ',email);
+    // });
 
     socket.on('createMessage', function(message) {
         console.log('new message: ',message);
+        io.emit('newMessage',{
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
     });
 });
 
